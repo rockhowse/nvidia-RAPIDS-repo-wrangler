@@ -81,3 +81,10 @@ root@6de548d21c8c:/# python --version
 Python 3.10.1
 root@6de548d21c8c:/#
 ```
+
+## Usage
+
+```bash
+❯ docker run nvidia-rapids-repo-wrangler:0.0.1
+The Cake Is A Lie!
+```
