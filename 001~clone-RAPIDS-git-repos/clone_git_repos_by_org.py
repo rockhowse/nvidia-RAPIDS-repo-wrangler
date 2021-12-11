@@ -9,7 +9,6 @@
 import json
 import os
 import subprocess
-import sys
 import urllib.request
 
 def clone_git_repo(perform_git_actions, repo, repos_dir, cloned_repo_names):
