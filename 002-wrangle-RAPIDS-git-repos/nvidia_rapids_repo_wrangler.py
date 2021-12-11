@@ -1,4 +1,4 @@
-# nvidia-RAPID-repo-wranger main application
+# nvidia-RAPIDS-repo-wranger main application
 
 # main application entrypoint
 if __name__ == "__main__":

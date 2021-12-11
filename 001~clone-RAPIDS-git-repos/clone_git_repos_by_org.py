@@ -38,7 +38,6 @@ def clone_git_repo(perform_git_actions, repo, repos_dir, cloned_repo_names):
 def compare_git_repos_to_local_repos(cloned_repo_names, cloned_repo_dir_names):
     return list(set(cloned_repo_names) - set(cloned_repo_dir_names))
 
-
 if __name__ == "__main__":
 
   # TODO: parametize these
