@@ -244,3 +244,25 @@ Resolving deltas: 100% (215901/215901), done.
 
 ~/Projects/nvidia/nvidia-RAPIDS-repo-wrangler/repos 002-download-RAPIDS-git-repos* 17s
 ```
+
+## listed vs cloned diff check
+
+In the event there was an issue cloning a repo, this should catch the disparity.
+
+Example after manually removing the `nvbench` repo and running in read-only mode:
+
+```bash
+...
+git clone https://github.com/rapidsai/nvbench ../repos/nvbench
+/bin/bash -c 'pushd ../repos/ucx && git pull && popd'
+/bin/bash -c 'pushd ../repos/rapids-triton && git pull && popd'
+/bin/bash -c 'pushd ../repos/rapids-triton-template && git pull && popd'
+/bin/bash -c 'pushd ../repos/rapids-triton-linear-example && git pull && popd'
+/bin/bash -c 'pushd ../repos/blazingsql-release-staging && git pull && popd'
+/bin/bash -c 'pushd ../repos/blazingsql-testing-files && git pull && popd'
+/bin/bash -c 'pushd ../repos/dask-sql && git pull && popd'
+/bin/bash -c 'pushd ../repos/ptxcompiler && git pull && popd'
+/bin/bash -c 'pushd ../repos/rvc && git pull && popd'
+/bin/bash -c 'pushd ../repos/rapids_triton_pca_example && git pull && popd'
+retrieved vs downloaded diff: ['nvbench']
+```
