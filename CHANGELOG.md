@@ -1,10 +1,12 @@
 # Changelog for nvida-RAPODS-repo-wrangler application
 
-## 2021-12-10
+## 2021-12-11 - 0.0.2
 
-Repo creation and dockerization of python environment
+* Refactored original code into separate directories for downloading and analysis
+* Added new application directory, Dockerfile and helper script to handle downloading the git repo retrieval
+* Refactored "download" naming to "clone" for more consistent git-parlance
 
-### 0.0.1
+## 2021-12-10 - 0.0.1
 
 * Added `CHANGELOG.md`
 * Added `README.md`
