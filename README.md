@@ -4,7 +4,7 @@ Repo to host some code used to come up to speed on the Nvidia RAPIDS code reposi
 ## Overall Goals
 
 - [X] dockerize our python runtime environment
-- [ ] clone RAPIDS git repositories for local analysis
+- [X] clone RAPIDS git repositories for local analysis
 - [ ] process the RAPIDS repos to get an overall view of the types of code used
 - [ ] provide some basic metrics on types of code used, focusing on CI/CD integrations
 - [ ] demonstrate understanding of CI/CD techniques incorporated in the repositories

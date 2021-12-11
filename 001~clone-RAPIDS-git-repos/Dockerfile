@@ -5,6 +5,10 @@ FROM python:3-slim-buster
 RUN apt-get -y update
 RUN apt-get -y install git
 
+# need to add github hosts to known hosts
+# https://github.com/ome/devspace/issues/38
+RUN mkdir ~/.ssh/ && ssh-keyscan github.com >> ~/.ssh/known_hosts
+
 # set working directory
 WORKDIR /app
 
