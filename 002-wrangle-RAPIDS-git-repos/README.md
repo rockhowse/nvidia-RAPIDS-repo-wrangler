@@ -115,3 +115,75 @@ drwxr-xr-x 17 root root  544 Dec 11 15:32 ucx-split-feedstock
 drwxr-xr-x 34 root root 1088 Dec 11 17:07 xgboost
 drwxr-xr-x  6 root root  192 Dec 11 17:08 xgboost-conda
 ```
+
+## basic file type analysis
+
+The nvidia_rapids_repo_wranger application processes the downloaded repositories and dumps out a bunch of infomration about the repos based on simple "file extension" information.
+
+While not perfect, this sets us up to create some more in-depth analysis based on some human evaluation of the results.
+
+### pre-repo summary (top 3 extensions)
+
+Each repository outputs something similar to this output:
+
+```bash
+cudf
+====================
+000343|cpp
+000318|cu
+000273|py
+```
+
+### TOTAL summary (top 10 extensions across all repositories)
+
+```bash
+TOTALS
+====================
+017793|.html
+007523|.cpp
+005957|.png
+005626|.md5
+004533|.map
+003374|.js
+002833|.py
+001815|.txt
+001803|no_file_ext
+001541|.dot
+```
+
+## interesting findings
+
+Some interesting findings even at this very basic level of analysis.
+
+### no_file_ext is top count
+
+There are several repos that have the `no_file_ext` count as the highest. These are files that don't have a `.` anywhere inside the file name. More analysis needed to find out what these files are so we can more properly account for them.
+
+Example:
+
+```bash
+asvdb
+====================
+000014|no_file_ext
+000011|.sample
+000006|.py
+```
+
+### The highest number of files by raw count accross all repos is `html` with 17k
+
+Kind of suprising. However the more rational `.cpp` extension comes in as second with another suprising `.js` beating out `.py`.
+
+```bash
+TOTALS
+====================
+017793|.html
+007523|.cpp
+005957|.png
+005626|.md5
+004533|.map
+003374|.js
+002833|.py
+001815|.txt
+001803|no_file_ext
+001541|.dot
+```

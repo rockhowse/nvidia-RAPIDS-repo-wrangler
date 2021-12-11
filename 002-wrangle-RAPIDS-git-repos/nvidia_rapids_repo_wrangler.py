@@ -34,7 +34,7 @@ def handle_repo_info(extension_map, file_name):
 
       extension_map[no_file_extension_key].append(file_name)
   else:
-    file_extension = file_name[last_period_index+1:]
+    file_extension = file_name[last_period_index:]
 
     if file_extension not in extension_map:
         extension_map[file_extension] = []
@@ -70,7 +70,7 @@ if __name__ == "__main__":
   # gather some metrics accross ALL repos for final analysis
   all_repo_info_by_file_type = {}
 
-  cloned_repo_dir_names = os.listdir(repos_dir)
+  cloned_repo_dir_names = sorted(os.listdir(repos_dir))
 
   # rip through each repo we downloaded and apply some logic
   [wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type) for repo_name in cloned_repo_dir_names]
