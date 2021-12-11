@@ -49,47 +49,69 @@ FROM python:3-slim-buster
 #### Example build
 
 ```bash
-❯ docker build -t download-rapids-repos:0.0.1 .
-[+] Building 0.2s (10/10) FINISHED
- => [internal] load build definition from Dockerfile                                                                            0.0s
- => => transferring dockerfile: 37B                                                                                             0.0s
- => [internal] load .dockerignore                                                                                               0.0s
- => => transferring context: 2B                                                                                                 0.0s
- => [internal] load metadata for docker.io/library/python:3-slim-buster                                                         0.1s
- => [1/5] FROM docker.io/library/python:3-slim-buster@sha256:d4354e51d606b0cf335fca22714bd599eef74ddc5778de31c64f1f73941008a4   0.0s
- => [internal] load build context                                                                                               0.0s
- => => transferring context: 47B                                                                                                0.0s
- => CACHED [2/5] RUN apt-get -y update                                                                                          0.0s
- => CACHED [3/5] RUN apt-get -y install git                                                                                     0.0s
- => CACHED [4/5] WORKDIR /app                                                                                                   0.0s
- => CACHED [5/5] COPY ./clone_git_repos_by_org.py .                                                                             0.0s
- => exporting to image                                                                                                          0.0s
- => => exporting layers                                                                                                         0.0s
- => => writing image sha256:77b446e2683f4e1ee3b8ebddb1449dcaed9e992ac2a933c7d4bf06f290bc3f59                                    0.0s
- => => naming to docker.io/library/download-rapids-repos:0.0.1                                                                  0.0s
+❯ docker build -t nvidia-rapids-repo-wrangler:0.0.2 .
+[+] Building 0.4s (8/8) FINISHED
+ => [internal] load build definition from Dockerfile                                                                          0.0s
+ => => transferring dockerfile: 37B                                                                                           0.0s
+ => [internal] load .dockerignore                                                                                             0.0s
+ => => transferring context: 2B                                                                                               0.0s
+ => [internal] load metadata for docker.io/library/python:3-slim-buster                                                       0.3s
+ => [1/3] FROM docker.io/library/python:3-slim-buster@sha256:d4354e51d606b0cf335fca22714bd599eef74ddc5778de31c64f1f73941008a  0.0s
+ => [internal] load build context                                                                                             0.0s
+ => => transferring context: 52B                                                                                              0.0s
+ => CACHED [2/3] WORKDIR /app                                                                                                 0.0s
+ => CACHED [3/3] COPY ./nvidia_rapids_repo_wrangler.py .                                                                      0.0s
+ => exporting to image                                                                                                        0.0s
+ => => exporting layers                                                                                                       0.0s
+ => => writing image sha256:3cbf63be3cb69c625b60adfc5603a7e7b297d92eb5a3b4fa96cbeaba423c8b80                                  0.0s
+ => => naming to docker.io/library/nvidia-rapids-repo-wrangler:0.0.2                                                          0.0s
 ```
 
 Checking the version and size:
 
 ```bash
 ❯ docker image ls
-REPOSITORY              TAG       IMAGE ID       CREATED          SIZE
-download-rapids-repos   0.0.1     77b446e2683f   14 minutes ago   220MB
+REPOSITORY                    TAG       IMAGE ID       CREATED          SIZE
+nvidia-rapids-repo-wrangler   0.0.2     3cbf63be3cb6   32 seconds ago   115MB
 ```
-
-*note* the inclusion of `git` tooling looks to have doubled the size of the image
 
 #### Testing python version
 
 ```bash
-❯ docker run -it download-rapids-repos:0.0.1 /bin/bash
-root@e5b1a92b5aa2:/app# python --version
+❯ docker run -it -v ${PWD}/../repos:/repos nvidia-rapids-repo-wrangler:0.0.2 /bin/bash
+root@2420d20ab319:/app# python --version
 Python 3.10.1
-root@e5b1a92b5aa2:/app#
+root@2420d20ab319:/app#
 ```
 
-## data download
+## rapids repo data download
 
 In order for this application to function as expected, you need to have downloaded the repositories using the scripts in the [001~clone-RAPIDS-git-repos](001~clone-RAPIDS-git-repos/README.md)
 
+### verify mounted data directory
 
+```bash
+❯ docker run -it -v ${PWD}/../repos:/repos nvidia-rapids-repo-wrangler:0.0.2 /bin/bash
+root@2420d20ab319:/app# ls -al /repos | head
+total 8
+drwxr-xr-x 80 root root 2560 Dec 11 18:09 .
+drwxr-xr-x  1 root root 4096 Dec 11 21:34 ..
+-rw-r--r--  1 root root   39 Dec 11 18:09 .gitignore
+drwxr-xr-x 13 root root  416 Dec 11 15:32 asvdb
+drwxr-xr-x 12 root root  384 Dec 11 17:09 benchmark
+drwxr-xr-x 37 root root 1184 Dec 11 15:33 blazingsql-release-staging
+drwxr-xr-x  8 root root  256 Dec 11 15:35 blazingsql-testing-files
+drwxr-xr-x 19 root root  608 Dec 11 17:09 ccache-feedstock
+drwxr-xr-x  7 root root  224 Dec 11 15:32 clang-recipe
+root@2420d20ab319:/app# ls -al /repos | tail
+drwxr-xr-x 13 root root  416 Dec 11 17:08 spark-examples
+drwxr-xr-x 16 root root  512 Dec 11 15:29 thirdparty-cub
+drwxr-xr-x 10 root root  320 Dec 11 15:32 thirdparty-freestanding
+drwxr-xr-x 23 root root  736 Dec 11 17:09 thirdparty-libcxx
+drwxr-xr-x 10 root root  320 Dec 11 17:08 thirdparty-moderngpu
+drwxr-xr-x 29 root root  928 Dec 11 17:10 ucx
+drwxr-xr-x 25 root root  800 Dec 11 17:07 ucx-py
+drwxr-xr-x 17 root root  544 Dec 11 15:32 ucx-split-feedstock
+drwxr-xr-x 34 root root 1088 Dec 11 17:07 xgboost
+drwxr-xr-x  6 root root  192 Dec 11 17:08 xgboost-conda
+```
