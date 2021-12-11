@@ -1,5 +1,10 @@
 # Changelog for nvida-RAPODS-repo-wrangler application
 
+## 2021-12-11 - 0.0.3
+
+* Added basic processing for all repositories in the RAPIDSai organization
+* Added VERY simple per and cross repo analysis of file types being used based on "extension"
+
 ## 2021-12-11 - 0.0.2
 
 * Refactored original code into separate directories for downloading and analysis
