@@ -169,9 +169,9 @@ asvdb
 000006|.py
 ```
 
-### The highest number of files by raw count accross all repos is `html` with 17k
+### The highest number of files by raw count across all repos is `html` with 17k
 
-Kind of suprising. However the more rational `.cpp` extension comes in as second with another suprising `.js` beating out `.py`.
+Kind of surprising. However the more rational `.cpp` extension comes in as second with another suprising `.js` beating out `.py`.
 
 ```bash
 TOTALS
@@ -187,3 +187,26 @@ TOTALS
 001803|no_file_ext
 001541|.dot
 ```
+
+### cross repo top N frequency numbers
+
+If we count the number of times a particiular extension is in the top based on number of repos we get some interesting data.
+
+```bash
+`=== RANK: #01 ===
+030|no_file_ext
+014|.py
+006|.cuh
+=== RANK: #02 ===
+026|.sample
+009|no_file_ext
+009|.cu
+=== RANK: #03 ===
+014|no_file_ext
+011|.sh
+008|.py
+```
+
+The `no_file_extension` appears as the most frequent in the 1st and 3rd slots the highest.
+The `.py` appears as the second most frequent for the top spot and 3rd most frequent for the third highest.
+The `.sample` one is not a file type I am familiar with but gives me some clues on where to dig next.
