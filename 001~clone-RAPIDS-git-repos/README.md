@@ -8,9 +8,9 @@ The packages that are not default to python are all defined in the the included 
 
 * Python 3.10+
   * json - (python built-in) used to parse, format and write json
-  * numpy - provides numerically efficient data structures useful for computation
-  * requests - simple and clean HTTP client
-  * unittest - (python built-in) provides simple unit-test functionality
+  * os - (python built-in) used to run commands needed to clone the repositories
+  * subprocess - (python built-in) allows us to use a more flexible command structure than os.system
+  * urllib.request - (python built-in) allows us to communicate with github http apis
 
 ## pre-requisites
 
