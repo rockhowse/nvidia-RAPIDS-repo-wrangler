@@ -49,6 +49,9 @@ def handle_repo_info(extension_map, file_name):
     extension_map[file_extension].append(file_name)
 
 # jenkins  ~ typical integration contains "Jenkinsfile" or naming variant
+#
+# https://www.jenkins.io/doc/book/pipeline/jenkinsfile/
+#
 # examples found in the non_file_ext_list.txt file:
 #   Jenkinsfile
 #   Jenkinsfile-win64
@@ -60,19 +63,55 @@ def possible_jenkins_integration(file_name):
 
   return jenkinsfile_name
 
+# circleci ~ typical integration includes `.circleci/config.yml` folder + file combination
+#
+# https://circleci.com/docs/2.0/configuration-reference/
+#
+def possible_circleci_integration(full_file_path, file_name):
+  circleci_file_name = None
+
+  if '.circleci/' in full_file_path:
+    circleci_file_name = file_name
+
+  return circleci_file_name
+
+# travisci ~ typical integration includes a `.travis.yml` file
+#
+# https://docs.travis-ci.com/user/tutorial/
+#
+# Ran into this while interviewing about the CI/CD build for >>>-- apache arrow --> ;)
+#
+# https://github.com/apache/arrow/blob/master/.travis.yml
+#
+def possible_travisci_integration(file_name):
+  travisci_file_name = None
+
+  if '.travis.yml' in file_name:
+    travisci_file_name = file_name
+
+  return travisci_file_name
+
+# let's add in an integration file by ci/cd type and repo
+def process_ci_cd_integration(integration_key, repo_name, file_name, ci_cd_integrations):
+      if integration_key not in ci_cd_integrations:
+        ci_cd_integrations[integration_key] = {}
+
+      if repo_name not in ci_cd_integrations[integration_key]:
+                ci_cd_integrations[integration_key][repo_name] = []
+
+      ci_cd_integrations[integration_key][repo_name].append(file_name)
+
 # let's use some common patterns to identify possible CI/CD integrations
 def identify_ci_cd_integrations(repo_name, full_file_path, file_name, ci_cd_integrations):
-    jenkins_integration_key = 'ci-cd-jenkins'
-
     # if we detect an integration, we will return the filename, otherwise return None so we can skip it
     if possible_jenkins_integration(file_name):
-      if jenkins_integration_key not in ci_cd_integrations:
-        ci_cd_integrations[jenkins_integration_key] = {}
+      process_ci_cd_integration('ci-cd-jenkins', repo_name, file_name, ci_cd_integrations)
 
-      if repo_name not in ci_cd_integrations[jenkins_integration_key]:
-                ci_cd_integrations[jenkins_integration_key][repo_name] = []
+    if possible_circleci_integration(full_file_path, file_name):
+      process_ci_cd_integration('ci-cd-circleci', repo_name, file_name, ci_cd_integrations)
 
-      ci_cd_integrations[jenkins_integration_key][repo_name].append(file_name)
+    if possible_travisci_integration(file_name):
+       process_ci_cd_integration('ci-cd-travisci', repo_name, file_name, ci_cd_integrations)
 
 def output_ci_cd_integrations(ci_cd_integrations):
   print(f"{json.dumps(ci_cd_integrations, sort_keys=True, indent=2)}")

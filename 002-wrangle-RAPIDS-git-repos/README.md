@@ -243,9 +243,13 @@ After excluding the `.git/` folder, we get some results that are a bit more expe
 
 The primary use case for the next phase of functionality is to identify existing CI/CD integrations. Given there are 77 repositories, this CAN occur by hand, but given I have the code to itterate all files in every repo, we can do some simple analysis on the files and directories of common CI/CD implementations to see if we can tease out a bit more information.
 
-### Jenkinsfile
+### Jenkins
 
-Typically jenkins integration is indicated by the use of files containing the word `Jenkinsfile`. Here's the output of the CI/CD integration with repos that possibly contain jenkins integration.
+Typically jenkins integration is indicated by the use of files containing the word `Jenkinsfile` as per the official documentation:
+
+https://www.jenkins.io/doc/book/pipeline/jenkinsfile/
+
+Example output for the `RAPIDSai` repositories:
 
 ```json
 {
@@ -259,6 +263,73 @@ Typically jenkins integration is indicated by the use of files containing the wo
     "xgboost": [
       "Jenkinsfile-win64",
       "Jenkinsfile"
+    ]
+  }
+}
+```
+
+### CircleCI
+
+CirlceCI integration is usually denoted by the presence of a `.circleci/config.yml` as per the documentation:
+
+https://circleci.com/docs/2.0/configuration-reference/
+
+Example output for the `RAPIDSai` repositories:
+
+```json
+{
+  "ci-cd-circleci": {
+    "ccache-feedstock": [
+      "config.yml"
+    ],
+    "cudatoolkit-feedstock": [
+      "config.yml"
+    ],
+    "dask-xgboost": [
+      "config.yml"
+    ],
+    "ucx-split-feedstock": [
+      "config.yml"
+    ]
+  }
+}
+```
+
+### TravisCI
+
+TravisCI integration is usually denoted by the presence of a `.travis.yml` as per the documentation:
+
+https://docs.travis-ci.com/user/tutorial/
+
+Example output for the `RAPIDSai` repositories:
+
+```json
+{
+  "ci-cd-travisci": {
+    "ccache-feedstock": [
+      ".travis.yml"
+    ],
+    "cucim": [
+      ".travis.yml",
+      ".travis.yml"
+    ],
+    "dask-cuml": [
+      ".travis.yml"
+    ],
+    "dlpack": [
+      ".travis.yml"
+    ],
+    "libgdf": [
+      ".travis.yml"
+    ],
+    "rvc": [
+      ".travis.yml"
+    ],
+    "thirdparty-libcxx": [
+      ".travis.yml"
+    ],
+    "xgboost": [
+      ".travis.yml"
     ]
   }
 }
