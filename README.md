@@ -8,6 +8,7 @@ Repo to host some code used to come up to speed on the Nvidia RAPIDS code reposi
 - [X] process the RAPIDS repos to get an overall view of the types of code used
 - [X] provide some basic metrics on types of code used, focusing on CI/CD integrations
 - [X] demonstrate understanding of CI/CD techniques incorporated in the repositories
+- [X] add detection for moved repositories
 
 ## Basic components
 
