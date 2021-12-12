@@ -635,3 +635,14 @@ https://github.com/rapidsai/spark-examples
 New Repo:
 
 https://github.com/NVIDIA/spark-xgboost-examples
+
+### Added detection for moved repos
+
+Example output:
+
+```json
+Showing 1 moved repos
+{
+  "spark-examples": "https://githubcom/NVIDIA/spark-xgboost-examples"
+}
+```

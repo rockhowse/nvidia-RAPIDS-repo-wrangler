@@ -136,7 +136,29 @@ def output_ci_cd_integrations(ci_cd_integrations):
   # now for a quick summary of integrations + number of repos
   output_simple_metrics_from_map(ci_cd_integrations, 4, len(ci_cd_integrations.keys()), 'CI/CD Integrations')
 
-def wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type, count_top_n_extensions, all_repo_ci_cd_integrations):
+# some of the repos have been moved from RAPODSai to NVIDA
+# let's find those repos and report on them
+#
+# Original Repo: https://github.com/rapidsai/spark-examples
+# New Repo: https://github.com/NVIDIA/spark-xgboost-examples
+#
+def is_repo_moved(full_file_path, file_name):
+  moved_url = None
+
+  if 'README.md' == file_name:
+    with open(full_file_path, 'r') as in_file:
+      for line in in_file:
+        stripped_line = line.strip()
+
+        if 'repo has been moved' in line:
+          # quick and dirty... probably not right could use some REGEX love
+          moved_url = stripped_line.split("(")[1].replace(')','').replace('.','')
+
+          print(f"=====> {full_file_path}\n\t  {moved_url}")
+
+          return moved_url
+
+def wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type, count_top_n_extensions, all_repo_ci_cd_integrations, all_repo_moved):
   # let's use some os.walk to rip through the files
   # https://stackoverflow.com/questions/19587118/iterating-through-directories-with-python
   # recursion baby!
@@ -170,6 +192,12 @@ def wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type, count_top_n_e
 
         # identify possible CI/CD integrations across repos
         identify_ci_cd_integrations(repo_name, full_file_path, file_name, all_repo_ci_cd_integrations)
+
+        # see if this repo has been potentially moved
+        moved_url = is_repo_moved(full_file_path, file_name)
+
+        if moved_url:
+          all_repo_moved[repo_name] = moved_url
 
   # output the summary information for the local repository
   sorted_num_and_ext_count_str = output_simple_metrics_from_map(repo_info_by_file_type, 6, 3, repo_name)
@@ -222,13 +250,14 @@ if __name__ == "__main__":
 
   # gather some metrics across ALL repos for final analysis
   count_top_n_extensions = {}
+  all_repo_moved = {}
   all_repo_info_by_file_type = {}
   all_repo_ci_cd_integrations = {}
 
   cloned_repo_dir_names = sorted(os.listdir(repos_dir))
 
   # rip through each repo we downloaded and apply some logic
-  [wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type, count_top_n_extensions, all_repo_ci_cd_integrations) for repo_name in cloned_repo_dir_names]
+  [wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type, count_top_n_extensions, all_repo_ci_cd_integrations, all_repo_moved) for repo_name in cloned_repo_dir_names]
 
   # output the summary information for all repositories combined
   output_simple_metrics_from_map(all_repo_info_by_file_type, 6, 10, 'TOTALS')
@@ -249,3 +278,9 @@ if __name__ == "__main__":
   # summary of CI/CD integrations by repo
   if len(all_repo_ci_cd_integrations) > 0:
     output_ci_cd_integrations(all_repo_ci_cd_integrations)
+
+  # output summary of moved repositories
+  print(f"Showing {len(all_repo_moved)} moved repos")
+
+  if len(all_repo_moved) > 0:
+    output_ci_cd_integrations(all_repo_moved)
