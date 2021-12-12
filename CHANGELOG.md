@@ -1,5 +1,12 @@
 # Changelog for nvida-RAPODS-repo-wrangler application
 
+## 2021-12-12 - 0.0.4
+
+* Added basic summary showing various CI/CD integrations and number of repos using them
+* Added detection for Jenkins CI/CD integration
+* Added detection for CircleCI CI/CD integration
+* Added detection for GithubActions CI/CD integration
+
 ## 2021-12-11 - 0.0.3
 
 * Added basic processing for all repositories in the RAPIDSai organization

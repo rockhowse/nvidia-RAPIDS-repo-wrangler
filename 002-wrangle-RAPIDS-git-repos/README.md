@@ -86,7 +86,7 @@ root@2420d20ab319:/app#
 
 ## rapids repo data download
 
-In order for this application to function as expected, you need to have downloaded the repositories using the scripts in the [001~clone-RAPIDS-git-repos](001~clone-RAPIDS-git-repos/README.md)
+In order for this application to function as expected, you need to have downloaded the repositories using the scripts in the [001~clone-RAPIDS-git-repos](../001~clone-RAPIDS-git-repos/README.md)
 
 ### verify mounted data directory
 
@@ -190,7 +190,9 @@ TOTALS
 
 ### cross repo top N frequency numbers
 
-If we count the number of times a particiular extension is in the top based on number of repos we get some interesting data.
+`ORIGINAL FINDINDS` updated analysis below:
+
+If we count the number of times a particular extension is in the top based on number of repos we get some interesting data.
 
 ```bash
 `=== RANK: #01 ===
@@ -207,6 +209,429 @@ If we count the number of times a particiular extension is in the top based on n
 008|.py
 ```
 
-The `no_file_extension` appears as the most frequent in the 1st and 3rd slots the highest.
-The `.py` appears as the second most frequent for the top spot and 3rd most frequent for the third highest.
-The `.sample` one is not a file type I am familiar with but gives me some clues on where to dig next.
+* The `no_file_extension` appears as the most frequent in the 1st and 3rd slots the highest.
+* The `.py` appears as the second most frequent for the top spot and 3rd most frequent for the third highest.
+* The `.sample` one is not a file type I am familiar with but gives me some clues on where to dig next.
+
+#### Exclude `.git/` from file inclusion in analysis
+
+This reduces the number of `no_file_ext` which contained a ton of hash files and other files specific to the git process but not necessarily part of the code being managed.
+
+After excluding the `.git/` folder, we get some results that are a bit more expected, but still not 100% convinced this is providing the full picture.
+
+```bash
+=== RANK: #01 ===
+020|.py
+007|.cuh
+005|.yaml
+=== RANK: #02 ===
+011|.sh
+009|.cu
+008|.py
+=== RANK: #03 ===
+010|no_file_ext
+010|.sh
+007|.py
+```
+
+* The `.py` extension appears as the most frequent for the top spot and 3rd most frequent for the second and third highest.
+* The `.cuh` and `.cu` extensions now show up as the second most occurring files for the First and Second rankings respectively.
+* The `.sh` extension appears as the top most and second most of the rank 2 and 3 positions respectively.
+* `no_file_ext` still exists as the top in the third rank, but isn't dominating throughout all the top 3 ranks
+
+## CI/CD integrations
+
+The primary use case for the next phase of functionality is to identify existing CI/CD integrations. Given there are 77 repositories, this CAN occur by hand, but given I have the code to itterate all files in every repo, we can do some simple analysis on the files and directories of common CI/CD implementations to see if we can tease out a bit more information.
+
+### Jenkins
+
+Typically jenkins integration is indicated by the use of files containing the word `Jenkinsfile` as per the official documentation:
+
+https://www.jenkins.io/doc/book/pipeline/jenkinsfile/
+
+Example output for the `RAPIDSai` repositories:
+
+```json
+{
+  "ci-cd-jenkins": {
+    "cugunrock": [
+      "Jenkinsfile"
+    ],
+    "gpuci-build-environment": [
+      "Jenkinsfile"
+    ],
+    "xgboost": [
+      "Jenkinsfile-win64",
+      "Jenkinsfile"
+    ]
+  }
+}
+```
+
+### CircleCI
+
+CirlceCI integration is usually denoted by the presence of a `.circleci/config.yml` as per the documentation:
+
+https://circleci.com/docs/2.0/configuration-reference/
+
+Example output for the `RAPIDSai` repositories:
+
+```json
+{
+  "ci-cd-circleci": {
+    "ccache-feedstock": [
+      "config.yml"
+    ],
+    "cudatoolkit-feedstock": [
+      "config.yml"
+    ],
+    "dask-xgboost": [
+      "config.yml"
+    ],
+    "ucx-split-feedstock": [
+      "config.yml"
+    ]
+  }
+}
+```
+
+### TravisCI
+
+TravisCI integration is usually denoted by the presence of a `.travis.yml` as per the documentation:
+
+https://docs.travis-ci.com/user/tutorial/
+
+Example output for the `RAPIDSai` repositories:
+
+```json
+{
+  "ci-cd-travisci": {
+    "ccache-feedstock": [
+      ".travis.yml"
+    ],
+    "cucim": [
+      ".travis.yml",
+      ".travis.yml"
+    ],
+    "dask-cuml": [
+      ".travis.yml"
+    ],
+    "dlpack": [
+      ".travis.yml"
+    ],
+    "libgdf": [
+      ".travis.yml"
+    ],
+    "rvc": [
+      ".travis.yml"
+    ],
+    "thirdparty-libcxx": [
+      ".travis.yml"
+    ],
+    "xgboost": [
+      ".travis.yml"
+    ]
+  }
+}
+```
+
+### Github Actions
+
+Github Actions integration is usually denoted by the presence of a `.github/workflows` as per the documentation:
+
+https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow
+
+Example output for the `RAPIDSai` repositories:
+
+```json
+{
+ "ci-cd-github-actions": {
+    "blazingsql-release-staging": [
+      "build-docs.yml"
+    ],
+    "ccache-feedstock": [
+      "automerge.yml",
+      "webservices.yml"
+    ],
+    "cloud-ml-examples": [
+      "docker-description.yaml"
+    ],
+    "clx": [
+      "labeler.yml",
+      "stale.yaml"
+    ],
+    "cudatoolkit-feedstock": [
+      "automerge.yml",
+      "webservices.yml"
+    ],
+    "cudf": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cugraph": [
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cuml": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cupy": [
+      "auto-cc.yml",
+      "backport.yml",
+      "pretest.yml"
+    ],
+    "cusignal": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cuspatial": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cuxfilter": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "dask-build-environment": [
+      "update-gpuci.yml"
+    ],
+    "dask-cuda": [
+      "labeler.yml",
+      "stale.yaml"
+    ],
+    "dask-sql": [
+      "test.yml",
+      "stylecheck.yml",
+      "deploy.yml",
+      "docker.yml"
+    ],
+    "docker": [
+      "dockerhub-readme.yml",
+      "dockerhub-readme-nightly.yml",
+      "generated-files.yml"
+    ],
+    "node": [
+      "docs.yaml",
+      "merge.pr.yml",
+      "main.pr.yml"
+    ],
+    "raft": [
+      "labeler.yml",
+      "stale.yaml"
+    ],
+    "rmm": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "rmm-testbed": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "rvc": [
+      "prs.yaml",
+      "deploy.yaml"
+    ],
+    "ucx-py": [
+      "rtd.yml"
+    ],
+    "ucx-split-feedstock": [
+      "automerge.yml",
+      "webservices.yml"
+    ],
+    "xgboost": [
+      "r_nold.yml",
+      "r_tests.yml",
+      "jvm_tests.yml",
+      "python_tests.yml",
+      "main.yml"
+    ]
+  }
+}
+```
+
+### No CI/CD detected
+
+We should also care if there are any repos without a detected CI/CD integration. If so, let's group em up and dump em. They might contain unfamiliar CI/CD implementations.
+
+Example output for the `RAPIDSai` repositories:
+
+```json
+{
+  "no_ci_cd_integrations": {
+    ".gitignore": [
+      ""
+    ],
+    "asvdb": [
+      ""
+    ],
+    "benchmark": [
+      ""
+    ],
+    "blazingsql-testing-files": [
+      ""
+    ],
+    "clang-recipe": [
+      ""
+    ],
+    "code-share": [
+      ""
+    ],
+    "cuDataShader": [
+      ""
+    ],
+    "cudf-alpha": [
+      ""
+    ],
+    "cugraphblas": [
+      ""
+    ],
+    "cuhornet": [
+      ""
+    ],
+    "custrings": [
+      ""
+    ],
+    "dask-cudf": [
+      ""
+    ],
+    "dask-cugraph": [
+      ""
+    ],
+    "deeplearning": [
+      ""
+    ],
+    "distributed-join": [
+      ""
+    ],
+    "docs": [
+      ""
+    ],
+    "frigate": [
+      ""
+    ],
+    "gpu-bdb": [
+      ""
+    ],
+    "gpuci-mgmt": [
+      ""
+    ],
+    "gpuci-tools": [
+      ""
+    ],
+    "gputreeshap": [
+      ""
+    ],
+    "helm-chart": [
+      ""
+    ],
+    "integration": [
+      ""
+    ],
+    "jitify": [
+      ""
+    ],
+    "jupyterlab-nvdashboard": [
+      ""
+    ],
+    "libcypher-parser-conda-recipe": [
+      ""
+    ],
+    "multi-gpu-tools": [
+      ""
+    ],
+    "notebooks": [
+      ""
+    ],
+    "nvbench": [
+      ""
+    ],
+    "nvgraph": [
+      ""
+    ],
+    "plotly-dash-rapids-census-demo": [
+      ""
+    ],
+    "pre-commit-hooks": [
+      ""
+    ],
+    "projects": [
+      ""
+    ],
+    "ptxcompiler": [
+      ""
+    ],
+    "rapids-cmake": [
+      ""
+    ],
+    "rapids-examples": [
+      ""
+    ],
+    "rapids-triton": [
+      ""
+    ],
+    "rapids-triton-linear-example": [
+      ""
+    ],
+    "rapids-triton-template": [
+      ""
+    ],
+    "rapids_triton_pca_example": [
+      ""
+    ],
+    "spark-examples": [
+      ""
+    ],
+    "thirdparty-cub": [
+      ""
+    ],
+    "thirdparty-freestanding": [
+      ""
+    ],
+    "thirdparty-moderngpu": [
+      ""
+    ],
+    "ucx": [
+      ""
+    ],
+    "xgboost-conda": [
+      ""
+    ]
+  }
+}
+```
+
+### CI/CD Integration Summary
+
+We are going to putput a summary of the types of CI/CD integrations detected for further discovery.
+
+Example output for the `RAPIDSai` repositories:
+
+```bash
+CI/CD Integrations
+====================
+0046|no_ci_cd_integrations
+0024|ci-cd-github-actions
+0008|ci-cd-travisci
+0004|ci-cd-circleci
+0003|ci-cd-jenkins
+```
+
+## It appears repos are being migrated from RAPIDSai -> NVIDIA github organization
+
+While looking into why some of the repos didn't have CI/CD integration found an example.
+
+Original Repo:
+
+https://github.com/rapidsai/spark-examples
+
+New Repo:
+
+https://github.com/NVIDIA/spark-xgboost-examples
