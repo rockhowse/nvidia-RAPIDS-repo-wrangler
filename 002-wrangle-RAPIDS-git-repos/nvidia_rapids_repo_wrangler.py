@@ -91,6 +91,18 @@ def possible_travisci_integration(file_name):
 
   return travisci_file_name
 
+# github actions ~ typical integration includes a `.github/workflows` directory structure
+#
+# https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow
+#
+def possible_github_actions_integration(full_file_path, file_name):
+  github_actions_file_name = None
+
+  if '.github/workflows' in full_file_path:
+    github_actions_file_name = file_name
+
+  return github_actions_file_name
+
 # let's add in an integration file by ci/cd type and repo
 def process_ci_cd_integration(integration_key, repo_name, file_name, ci_cd_integrations):
       if integration_key not in ci_cd_integrations:
@@ -111,7 +123,11 @@ def identify_ci_cd_integrations(repo_name, full_file_path, file_name, ci_cd_inte
       process_ci_cd_integration('ci-cd-circleci', repo_name, file_name, ci_cd_integrations)
 
     if possible_travisci_integration(file_name):
-       process_ci_cd_integration('ci-cd-travisci', repo_name, file_name, ci_cd_integrations)
+      process_ci_cd_integration('ci-cd-travisci', repo_name, file_name, ci_cd_integrations)
+
+    if possible_github_actions_integration(full_file_path, file_name):
+      process_ci_cd_integration('ci-cd-github-actions', repo_name, file_name, ci_cd_integrations)
+
 
 def output_ci_cd_integrations(ci_cd_integrations):
   print(f"{json.dumps(ci_cd_integrations, sort_keys=True, indent=2)}")

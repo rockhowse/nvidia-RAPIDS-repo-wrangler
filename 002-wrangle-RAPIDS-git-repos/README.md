@@ -334,3 +334,125 @@ Example output for the `RAPIDSai` repositories:
   }
 }
 ```
+
+### Github Actions
+
+Github Actions integration is usually denoted by the presence of a `.github/workflows` as per the documentation:
+
+https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions#create-an-example-workflow
+
+Example output for the `RAPIDSai` repositories:
+
+```json
+{
+ "ci-cd-github-actions": {
+    "blazingsql-release-staging": [
+      "build-docs.yml"
+    ],
+    "ccache-feedstock": [
+      "automerge.yml",
+      "webservices.yml"
+    ],
+    "cloud-ml-examples": [
+      "docker-description.yaml"
+    ],
+    "clx": [
+      "labeler.yml",
+      "stale.yaml"
+    ],
+    "cudatoolkit-feedstock": [
+      "automerge.yml",
+      "webservices.yml"
+    ],
+    "cudf": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cugraph": [
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cuml": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cupy": [
+      "auto-cc.yml",
+      "backport.yml",
+      "pretest.yml"
+    ],
+    "cusignal": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cuspatial": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "cuxfilter": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "dask-build-environment": [
+      "update-gpuci.yml"
+    ],
+    "dask-cuda": [
+      "labeler.yml",
+      "stale.yaml"
+    ],
+    "dask-sql": [
+      "test.yml",
+      "stylecheck.yml",
+      "deploy.yml",
+      "docker.yml"
+    ],
+    "docker": [
+      "dockerhub-readme.yml",
+      "dockerhub-readme-nightly.yml",
+      "generated-files.yml"
+    ],
+    "node": [
+      "docs.yaml",
+      "merge.pr.yml",
+      "main.pr.yml"
+    ],
+    "raft": [
+      "labeler.yml",
+      "stale.yaml"
+    ],
+    "rmm": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "rmm-testbed": [
+      "labeler.yml",
+      "new-issues-to-triage-projects.yml",
+      "stale.yaml"
+    ],
+    "rvc": [
+      "prs.yaml",
+      "deploy.yaml"
+    ],
+    "ucx-py": [
+      "rtd.yml"
+    ],
+    "ucx-split-feedstock": [
+      "automerge.yml",
+      "webservices.yml"
+    ],
+    "xgboost": [
+      "r_nold.yml",
+      "r_tests.yml",
+      "jvm_tests.yml",
+      "python_tests.yml",
+      "main.yml"
+    ]
+  }
+}
+```
