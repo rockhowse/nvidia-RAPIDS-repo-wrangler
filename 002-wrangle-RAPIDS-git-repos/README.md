@@ -190,7 +190,9 @@ TOTALS
 
 ### cross repo top N frequency numbers
 
-If we count the number of times a particiular extension is in the top based on number of repos we get some interesting data.
+`ORIGINAL FINDINDS` updated analysis below:
+
+If we count the number of times a particular extension is in the top based on number of repos we get some interesting data.
 
 ```bash
 `=== RANK: #01 ===
@@ -207,6 +209,57 @@ If we count the number of times a particiular extension is in the top based on n
 008|.py
 ```
 
-The `no_file_extension` appears as the most frequent in the 1st and 3rd slots the highest.
-The `.py` appears as the second most frequent for the top spot and 3rd most frequent for the third highest.
-The `.sample` one is not a file type I am familiar with but gives me some clues on where to dig next.
+* The `no_file_extension` appears as the most frequent in the 1st and 3rd slots the highest.
+* The `.py` appears as the second most frequent for the top spot and 3rd most frequent for the third highest.
+* The `.sample` one is not a file type I am familiar with but gives me some clues on where to dig next.
+
+#### Exclude `.git/` from file inclusion in analysis
+
+This reduces the number of `no_file_ext` which contained a ton of hash files and other files specific to the git process but not necessarily part of the code being managed.
+
+After excluding the `.git/` folder, we get some results that are a bit more expected, but still not 100% convinced this is providing the full picture.
+
+```bash
+=== RANK: #01 ===
+020|.py
+007|.cuh
+005|.yaml
+=== RANK: #02 ===
+011|.sh
+009|.cu
+008|.py
+=== RANK: #03 ===
+010|no_file_ext
+010|.sh
+007|.py
+```
+
+* The `.py` extension appears as the most frequent for the top spot and 3rd most frequent for the second and third highest.
+* The `.cuh` and `.cu` extensions now show up as the second most occurring files for the First and Second rankings respectively.
+* The `.sh` extension appears as the top most and second most of the rank 2 and 3 positions respectively.
+* `no_file_ext` still exists as the top in the third rank, but isn't dominating throughout all the top 3 ranks
+
+## CI/CD integrations
+
+The primary use case for the next phase of functionality is to identify existing CI/CD integrations. Given there are 77 repositories, this CAN occur by hand, but given I have the code to itterate all files in every repo, we can do some simple analysis on the files and directories of common CI/CD implementations to see if we can tease out a bit more information.
+
+### Jenkinsfile
+
+Typically jenkins integration is indicated by the use of files containing the word `Jenkinsfile`. Here's the output of the CI/CD integration with repos that possibly contain jenkins integration.
+
+```json
+{
+  "ci-cd-jenkins": {
+    "cugunrock": [
+      "Jenkinsfile"
+    ],
+    "gpuci-build-environment": [
+      "Jenkinsfile"
+    ],
+    "xgboost": [
+      "Jenkinsfile-win64",
+      "Jenkinsfile"
+    ]
+  }
+}
+```
