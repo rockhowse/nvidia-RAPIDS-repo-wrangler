@@ -6,8 +6,8 @@ Repo to host some code used to come up to speed on the Nvidia RAPIDS code reposi
 - [X] dockerize our python runtime environment
 - [X] clone RAPIDS git repositories for local analysis
 - [X] process the RAPIDS repos to get an overall view of the types of code used
-- [ ] provide some basic metrics on types of code used, focusing on CI/CD integrations
-- [ ] demonstrate understanding of CI/CD techniques incorporated in the repositories
+- [X] provide some basic metrics on types of code used, focusing on CI/CD integrations
+- [X] demonstrate understanding of CI/CD techniques incorporated in the repositories
 - [ ] gain a solid understanding of the Conda build process for these repositories
 
 ## Basic components
