@@ -466,7 +466,160 @@ Example output for the `RAPIDSai` repositories:
 ```json
 {
   "no_ci_cd_integrations": {
-    "xgboost-conda": []
+    ".gitignore": [
+      ""
+    ],
+    "asvdb": [
+      ""
+    ],
+    "benchmark": [
+      ""
+    ],
+    "blazingsql-testing-files": [
+      ""
+    ],
+    "clang-recipe": [
+      ""
+    ],
+    "code-share": [
+      ""
+    ],
+    "cuDataShader": [
+      ""
+    ],
+    "cudf-alpha": [
+      ""
+    ],
+    "cugraphblas": [
+      ""
+    ],
+    "cuhornet": [
+      ""
+    ],
+    "custrings": [
+      ""
+    ],
+    "dask-cudf": [
+      ""
+    ],
+    "dask-cugraph": [
+      ""
+    ],
+    "deeplearning": [
+      ""
+    ],
+    "distributed-join": [
+      ""
+    ],
+    "docs": [
+      ""
+    ],
+    "frigate": [
+      ""
+    ],
+    "gpu-bdb": [
+      ""
+    ],
+    "gpuci-mgmt": [
+      ""
+    ],
+    "gpuci-tools": [
+      ""
+    ],
+    "gputreeshap": [
+      ""
+    ],
+    "helm-chart": [
+      ""
+    ],
+    "integration": [
+      ""
+    ],
+    "jitify": [
+      ""
+    ],
+    "jupyterlab-nvdashboard": [
+      ""
+    ],
+    "libcypher-parser-conda-recipe": [
+      ""
+    ],
+    "multi-gpu-tools": [
+      ""
+    ],
+    "notebooks": [
+      ""
+    ],
+    "nvbench": [
+      ""
+    ],
+    "nvgraph": [
+      ""
+    ],
+    "plotly-dash-rapids-census-demo": [
+      ""
+    ],
+    "pre-commit-hooks": [
+      ""
+    ],
+    "projects": [
+      ""
+    ],
+    "ptxcompiler": [
+      ""
+    ],
+    "rapids-cmake": [
+      ""
+    ],
+    "rapids-examples": [
+      ""
+    ],
+    "rapids-triton": [
+      ""
+    ],
+    "rapids-triton-linear-example": [
+      ""
+    ],
+    "rapids-triton-template": [
+      ""
+    ],
+    "rapids_triton_pca_example": [
+      ""
+    ],
+    "spark-examples": [
+      ""
+    ],
+    "thirdparty-cub": [
+      ""
+    ],
+    "thirdparty-freestanding": [
+      ""
+    ],
+    "thirdparty-moderngpu": [
+      ""
+    ],
+    "ucx": [
+      ""
+    ],
+    "xgboost-conda": [
+      ""
+    ]
   }
 }
+```
+
+### CI/CD Integration Summary
+
+We are going to putput a summary of the types of CI/CD integrations detected for further discovery.
+
+Example output for the `RAPIDSai` repositories:
+
+```bash
+CI/CD Integrations
+====================
+0046|no_ci_cd_integrations
+0024|ci-cd-github-actions
+0008|ci-cd-travisci
+0004|ci-cd-circleci
+0003|ci-cd-jenkins
 ```

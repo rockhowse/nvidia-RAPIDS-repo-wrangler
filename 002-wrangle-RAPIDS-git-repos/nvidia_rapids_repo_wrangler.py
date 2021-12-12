@@ -133,6 +133,9 @@ def identify_ci_cd_integrations(repo_name, full_file_path, file_name, ci_cd_inte
 def output_ci_cd_integrations(ci_cd_integrations):
   print(f"{json.dumps(ci_cd_integrations, sort_keys=True, indent=2)}")
 
+  # now for a quick summary of integrations + number of repos
+  output_simple_metrics_from_map(ci_cd_integrations, 4, len(ci_cd_integrations.keys()), 'CI/CD Integrations')
+
 def wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type, count_top_n_extensions, all_repo_ci_cd_integrations):
   # let's use some os.walk to rip through the files
   # https://stackoverflow.com/questions/19587118/iterating-through-directories-with-python
@@ -177,8 +180,9 @@ def wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type, count_top_n_e
   # let's add in a `no_ci_cd_integrations` key and add this repo into it
   else:
     no_ci_cd_integrations_key = 'no_ci_cd_integrations'
-    repo_ci_cd_integrations[no_ci_cd_integrations_key] = {repo_name:[]}
-    all_repo_ci_cd_integrations[no_ci_cd_integrations_key] = {repo_name:[]}
+
+    process_ci_cd_integration('no_ci_cd_integrations', repo_name, '', repo_ci_cd_integrations)
+    process_ci_cd_integration('no_ci_cd_integrations', repo_name, '', all_repo_ci_cd_integrations)
 
   # create a list for the top N we have selected above, then count frequency by extension
   for i in list(range(0,len(sorted_num_and_ext_count_str))):
