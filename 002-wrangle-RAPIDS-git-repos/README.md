@@ -86,7 +86,7 @@ root@2420d20ab319:/app#
 
 ## rapids repo data download
 
-In order for this application to function as expected, you need to have downloaded the repositories using the scripts in the [001~clone-RAPIDS-git-repos](001~clone-RAPIDS-git-repos/README.md)
+In order for this application to function as expected, you need to have downloaded the repositories using the scripts in the [001~clone-RAPIDS-git-repos](../001~clone-RAPIDS-git-repos/README.md)
 
 ### verify mounted data directory
 
