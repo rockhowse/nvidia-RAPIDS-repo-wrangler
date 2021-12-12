@@ -623,3 +623,15 @@ CI/CD Integrations
 0004|ci-cd-circleci
 0003|ci-cd-jenkins
 ```
+
+## It appears repos are being migrated from RAPIDSai -> NVIDIA github organization
+
+While looking into why some of the repos didn't have CI/CD integration found an example.
+
+Original Repo:
+
+https://github.com/rapidsai/spark-examples
+
+New Repo:
+
+https://github.com/NVIDIA/spark-xgboost-examples
