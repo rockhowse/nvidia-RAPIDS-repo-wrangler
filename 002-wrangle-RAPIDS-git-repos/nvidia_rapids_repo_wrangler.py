@@ -4,6 +4,8 @@
 # The purpose of this application to do do some discovery
 # on the composition of the RAPIDS repositories.
 #
+# One main purpose of discovery is to identify possible CI/CD integrations across all repos.
+#
 ###
 import os
 import json
@@ -128,7 +130,6 @@ def identify_ci_cd_integrations(repo_name, full_file_path, file_name, ci_cd_inte
     if possible_github_actions_integration(full_file_path, file_name):
       process_ci_cd_integration('ci-cd-github-actions', repo_name, file_name, ci_cd_integrations)
 
-
 def output_ci_cd_integrations(ci_cd_integrations):
   print(f"{json.dumps(ci_cd_integrations, sort_keys=True, indent=2)}")
 
@@ -173,6 +174,11 @@ def wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type, count_top_n_e
   # output the CI/CD integration information for the local repository
   if len(repo_ci_cd_integrations) > 0:
     output_ci_cd_integrations(repo_ci_cd_integrations)
+  # let's add in a `no_ci_cd_integrations` key and add this repo into it
+  else:
+    no_ci_cd_integrations_key = 'no_ci_cd_integrations'
+    repo_ci_cd_integrations[no_ci_cd_integrations_key] = {repo_name:[]}
+    all_repo_ci_cd_integrations[no_ci_cd_integrations_key] = {repo_name:[]}
 
   # create a list for the top N we have selected above, then count frequency by extension
   for i in list(range(0,len(sorted_num_and_ext_count_str))):
@@ -188,7 +194,6 @@ def wrangle_repo(repos_dir, repo_name, all_repo_info_by_file_type, count_top_n_e
 
     # let's increment the count of this extension
     count_top_n_extensions[i][extension_at_index] += 1
-
 
 def show_count_of_repos_at_top_n(count_top_n_extensions):
   ranked_extension_frequency = {}

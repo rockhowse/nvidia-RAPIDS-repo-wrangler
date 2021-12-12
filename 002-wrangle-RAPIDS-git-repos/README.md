@@ -456,3 +456,17 @@ Example output for the `RAPIDSai` repositories:
   }
 }
 ```
+
+### No CI/CD detected
+
+We should also care if there are any repos without a detected CI/CD integration. If so, let's group em up and dump em. They might contain unfamiliar CI/CD implementations.
+
+Example output for the `RAPIDSai` repositories:
+
+```json
+{
+  "no_ci_cd_integrations": {
+    "xgboost-conda": []
+  }
+}
+```
